@@ -1,6 +1,6 @@
 # Alpha Vantage to MQTT
 
-This script was written to provide stock price to a MQTT sensor in the [HomeAssistant](https://home-assistant.io) home automation platform. Unfortunately the built in Alpha Vantage componet fails if you have more than 1 or 2 stocks that you want to follow. It also allows you to offload the script to another system to save your [HomeAssistant](https://home-assistant.io) resources from non-mission critical functions.
+This script was written to provide stock price to a MQTT sensor in the [HomeAssistant](https://home-assistant.io) home automation platform. Unfortunately the built in Alpha Vantage componet fails if you have more than 1 or 2 stocks that you want to follow. And this script also allows you to offload the sensor update to another system to save your [HomeAssistant](https://home-assistant.io) resources from non-mission critical functions.
 
 ## Requirements
 * You will need the ability to execute this script.
