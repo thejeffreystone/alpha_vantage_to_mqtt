@@ -11,7 +11,7 @@ This script was written to provide stock price to a MQTT sensor in the [HomeAssi
 * Install the app by cloning this repo
  - `git clone https://github.com/thejeffreystone/alpha_vantage_to_mqtt.git`
 * Install the required python libraries:
- - `pip install paho.mqtt`
+ - `pip install paho-mqtt`
  - `pip install alpha_vantage`
  - `pip install python-dotenv`
 * Edit the env-sample and saved as .env
