@@ -18,14 +18,16 @@ This script was written to provide stock price to a MQTT sensor in the [HomeAssi
 
 ## Run
 
-This script is meant to run with something like supervisord, but can be executed manually and will stay running until killed. 
+This script is meant to run with something like supervisord, but can be executed manually and will stay running until killed.
+
+There is a brief write up about the specific use case I built this for at [https://slackerlabs.org/2019/03/08/home-assistant-alpha-vantage/]
 
 ## Features
 * This script publishes stock price to topic `stock/<stock_name>/price`
 * This script utilizes the `get_batch_stock_quotes` method of the Alpha Vantage API to reduce the number of calls to the API to avoid hitting the API more than once a second.
 * This script is built to run continiously and will pause for the interval set in the `.env` file.  
 
-## Compaitbility
+## Compatibility
 
 This script was written and tested using python 3.7.2
 
