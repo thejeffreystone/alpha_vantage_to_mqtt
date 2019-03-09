@@ -1,0 +1,14 @@
+# MQTT Broker
+broker=192.168.1.2
+port=1883
+user=mqtt
+password=secretpw
+
+# Alpha Vantage API Key - https://www.alphavantage.co/support/#api-key
+api_key='<my_alpha_vantag_key>'
+
+# Comma delimited list of stocks you want to monitor
+stocks=GOOG,AMZN,APPL,FB
+
+# Interval, in seconds, you want to run the updates. 3600 = 1 hour.  
+interval=3600 
