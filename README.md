@@ -19,9 +19,10 @@ This script was written to provide stock price to a MQTT sensor in the [HomeAssi
 
 ## Run
 
-This script is meant to run with something like supervisord, but can be executed manually and will stay running until killed.
+This script is meant to run with something like supervisord, and has a default interval of 3600 seconds (1 hour). If you want to have this script to update your stocks continiously set the interval greater than zero. If interval is set to 0 the script will exit after running once. If you want to have cron or some other system mange the script execution then simply set the interval to 0 in the .env 
 
 There is a brief write up about the specific use case I built this for at [https://slackerlabs.org/2019/03/08/home-assistant-alpha-vantage/]
+
 
 ## Features
 * This script publishes stock price to topic `stock/<stock_name>/price`

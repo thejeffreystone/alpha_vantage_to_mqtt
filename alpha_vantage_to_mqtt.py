@@ -9,6 +9,7 @@
 import os
 import time
 import json
+import sys
 import paho.mqtt.client as mqtt
 from alpha_vantage.timeseries import TimeSeries
 from alpha_vantage.foreignexchange import ForeignExchange
@@ -111,8 +112,14 @@ def main(interval):
 		if http_event_collector_key:
 			splunkIt(records,symbols,total_elapsed_time,api_call_time)
 		if app_mode == 'debug':
-			print("Script Completed...time to sleep for {} seconds\n".format(interval))
-		time.sleep(interval)
+			print("Script Completed...")
+		if interval > 0:
+			print("Time to sleep for {} seconds\n".format(interval))
+			time.sleep(interval)
+		else:
+			if app_mode == 'debug':
+				print("No Interval set...exiting...\n")
+			sys.exit()
 
 if __name__ == "__main__":
     main(interval)

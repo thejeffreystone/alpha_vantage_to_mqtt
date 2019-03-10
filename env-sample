@@ -12,7 +12,7 @@ api_key='<my_alpha_vantag_key>'
 # Comma delimited list of stocks you want to monitor
 stocks=GOOG,AMZN,APPL,FB
 
-# Interval, in seconds, you want to run the updates. 3600 = 1 hour.  
+# Interval, in seconds, you want to run the updates. 3600 = 1 hour. If you set inteval to 0 the script will exit after running once.  
 interval=3600 
 
 # Splunk Server:
