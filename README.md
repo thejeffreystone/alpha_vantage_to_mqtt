@@ -6,6 +6,7 @@ This script was written to provide stock price to a MQTT sensor in the [HomeAssi
 * You will need the ability to execute this script.
 * You will need a MQTT sever that you can publish to.
 * You will need a Alpha Vantage API key which is free. Sign up at [https://www.alphavantage.co/support/#api-key](https://www.alphavantage.co/support/#api-key)
+* if you want to use Splunk to log this script, jump to [You can Splunk it if you want to...](https://github.com/thejeffreystone/alpha_vantage_to_mqtt#you-can-splunk-it-if-you-want-to-you-can-leave-your-friends-behind) 
 
 ## Installation
 * Install the app by cloning this repo
