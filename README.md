@@ -41,7 +41,7 @@ If you want to use the Splunk component you will need to install [George Starche
 The update your .env to include the details of your Splunk server:
 ```
 # Splunk Server:
-splunk_host=192.168.1.20
+splunk_server=192.168.1.20
 # Splunk HEC Port - Default is 8088:
 splunk_hec_port=8088
 # Splunk Hec SSL:
