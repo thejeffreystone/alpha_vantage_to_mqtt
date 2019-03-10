@@ -51,7 +51,7 @@ splunk_hec_key=
 ```
 If you don't set a token, the script will ignore the Splunk portion. 
 
-If you are knew to Splunk or the Splunk's HTTP Event Collector you can find more information at [Use Splunk's HTTP Event Collector](https://docs.splunk.com/Documentation/Splunk/latest/Data/UsetheHTTPEventCollector)
+If you are new to Splunk or the Splunk's HTTP Event Collector you can find more information at [Use Splunk's HTTP Event Collector](https://docs.splunk.com/Documentation/Splunk/latest/Data/UsetheHTTPEventCollector)
 
 ## Compatibility
 
