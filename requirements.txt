@@ -1,0 +1,4 @@
+alpha-vantage>=2.1.0
+Splunk-HEC>=1.5
+python-dotenv>=0.10.1
+paho-mqtt>=1.4.0
