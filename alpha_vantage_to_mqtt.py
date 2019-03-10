@@ -25,9 +25,13 @@ port = int(os.getenv("port"))
 user = os.getenv("user")
 password = os.getenv("password")
 http_event_collector_key = os.getenv("splunk_hec_key")
-http_event_collector_host = os.getenv("splunk_host")
+http_event_collector_host = os.getenv("splunk_server")
 http_event_collector_ssl = os.getenv("splunk_hec_ssl")
 http_event_collector_port = int(os.getenv("splunk_hec_port"))
+splunk_host = os.getenv("splunk_host")
+splunk_source = os.getenv("splunk_source")
+splunk_sourcetype = os.getenv("splunk_sourcetype")
+splunk_index = os.getenv("splunk_index")
 
 # if splunk hec key set in .env load the splunk libraries
 if http_event_collector_key:
@@ -74,10 +78,10 @@ def splunkIt(records, symbols,total_elapsed_time, api_elapsed_time):
 	logevent.popNullFields = True
 
 	payload = {}
-	payload.update({"index":"homeassistant"})
-	payload.update({"sourcetype":"alpha_vantage_mqtt"})
-	payload.update({"source":"alpha_vantage_script"})
-	payload.update({"host":"jarvis"})
+	payload.update({"index":splunk_index})
+	payload.update({"sourcetype":splunk_sourcetype})
+	payload.update({"source":splunk_source})
+	payload.update({"host":splunk_host})
 	event = {}
 	event.update({"action":"success"})
 	event.update({"records":records})

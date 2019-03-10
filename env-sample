@@ -16,10 +16,18 @@ stocks=GOOG,AMZN,APPL,FB
 interval=3600 
 
 # Splunk Server:
-splunk_host=192.168.1.20
+splunk_server=192.168.1.20
 # Splunk HEC Port - Default is 8088:
 splunk_hec_port=8088
 # Splunk Hec SSL:
 splunk_hec_ssl=False
 # Splunk HEC Token:
 splunk_hec_key=
+# Splunk index:
+splunk_index=main
+# Splunk sourcetype:
+splunk_sourcetype=alpha_vantage
+# Splunk Source:
+splunk_source=alpha_vantage_script
+# Splunk host:
+splunk_host=jarvis

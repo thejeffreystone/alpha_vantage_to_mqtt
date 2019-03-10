@@ -48,6 +48,14 @@ splunk_hec_port=8088
 splunk_hec_ssl=False
 # Splunk HEC Token:
 splunk_hec_key=
+# Splunk index:
+splunk_index=main
+# Splunk sourcetype:
+splunk_sourcetype=alpha_vantage
+# Splunk Source:
+splunk_source=alpha_vantage_script
+# Splunk host:
+splunk_host=jarvis
 
 ```
 If you don't set a token, the script will ignore the Splunk portion. 
