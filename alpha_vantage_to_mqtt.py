@@ -18,7 +18,7 @@ api_key = os.getenv("api_key")
 symbols = os.getenv("stocks").split(",")
 interval = int(os.getenv("interval"))
 broker = os.getenv("broker")
-port = os.getenv("port")
+port = int(os.getenv("port"))
 user = os.getenv("user")
 password = os.getenv("password")
 
@@ -41,7 +41,7 @@ def publishToMqtt(symbol,price):
 	paho= mqtt.Client("stock_monitor") 
 	paho.username_pw_set(user, password=password)                           
 	paho.on_publish = on_publish                         
-	paho.connect(broker,1883)                                 
+	paho.connect(broker,port)                                 
 	ret= paho.publish("stock/{}/price".format(symbol),price) 
 	paho.disconnect()
 
