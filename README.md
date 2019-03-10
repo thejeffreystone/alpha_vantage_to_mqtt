@@ -25,7 +25,32 @@ There is a brief write up about the specific use case I built this for at [https
 ## Features
 * This script publishes stock price to topic `stock/<stock_name>/price`
 * This script utilizes the `get_batch_stock_quotes` method of the Alpha Vantage API to reduce the number of calls to the API to avoid hitting the API more than once a second.
-* This script is built to run continiously and will pause for the interval set in the `.env` file.  
+* This script is built to run continiously and will pause for the interval set in the `.env` file.
+* The script has an app_mode set in the .env file. When app_mode is set to `debug` the script will output status messages to stdout. If you would like to supress these, change app_mode to somethign other than `debug`. Default app_mode is `prod`.   
+* Log the script to Splunk using Splunk's HTTP Event Collector
+
+## You can Splunk It if you want to. You can leave your friends behind...
+
+I added the ability to log to [Splunk's HTTP Event Collector](https://docs.splunk.com/Documentation/Splunk/latest/Data/UsetheHTTPEventCollector) if you are like me and like to Splunk everything. The script leverages [George Starcher's Python Class](https://github.com/georgestarcher/Splunk-Class-httpevent).
+
+If you want to use the Splunk component you will need to install [George Starcher's Python Class](https://github.com/georgestarcher/Splunk-Class-httpevent)
+ - `pip install git+git://github.com/georgestarcher/Splunk-Class-httpevent.git`
+
+The update your .env to include the details of your Splunk server:
+```
+# Splunk Server:
+splunk_host=192.168.1.20
+# Splunk HEC Port - Default is 8088:
+splunk_hec_port=8088
+# Splunk Hec SSL:
+splunk_hec_ssl=False
+# Splunk HEC Token:
+splunk_hec_key=
+
+```
+If you don't set a token, the script will ignore the Splunk portion. 
+
+If you are knew to Splunk or the Splunk's HTTP Event Collector you can find more information at [Use Splunk's HTTP Event Collector](https://docs.splunk.com/Documentation/Splunk/latest/Data/UsetheHTTPEventCollector)
 
 ## Compatibility
 

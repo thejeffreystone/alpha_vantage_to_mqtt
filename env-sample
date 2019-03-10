@@ -1,3 +1,5 @@
+app_mode=prod
+
 # MQTT Broker
 broker=192.168.1.2
 port=1883
@@ -12,3 +14,12 @@ stocks=GOOG,AMZN,APPL,FB
 
 # Interval, in seconds, you want to run the updates. 3600 = 1 hour.  
 interval=3600 
+
+# Splunk Server:
+splunk_host=192.168.1.20
+# Splunk HEC Port - Default is 8088:
+splunk_hec_port=8088
+# Splunk Hec SSL:
+splunk_hec_ssl=False
+# Splunk HEC Token:
+splunk_hec_key=
