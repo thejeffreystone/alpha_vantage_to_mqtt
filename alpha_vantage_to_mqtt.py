@@ -69,7 +69,7 @@ def publishToMqtt(symbol, price):
     paho.username_pw_set(user, password=password)
     paho.on_publish = on_publish
     paho.connect(broker, port)
-    ret = paho.publish("stock/{}/price".format(symbol), price)
+    paho.publish("stock/{}/price".format(symbol), price)
     if app_mode == 'debug':
         print("Published {} with price {} to MQTT...\n".format(symbol, price))
     paho.disconnect()
