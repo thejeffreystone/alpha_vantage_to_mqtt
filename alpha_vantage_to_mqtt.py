@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 """
-    @author         :   Jeffrey Stone
-    @date           :   03/08/2019
-    @script        	:   alpha_vantage_to_mqtt.py
-    @description    :   Script to grab stock prices from Alpha Vantage and
-                        publish them to MQTT to be consumed by another service
+Publish Alpha Vantage to MQTT.
+
+Script to grab stock prices from Alpha Vantage and
+publish them to MQTT to be consumed by another service.
 """
 
 import os
