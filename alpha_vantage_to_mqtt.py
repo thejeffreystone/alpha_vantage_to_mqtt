@@ -1,18 +1,17 @@
 #!/usr/bin/env python3
-##############################################################################
-#   @author         :   Jeffrey Stone
-#   @date           :   03/08/2019
-#   @script        	:   alpha_vantage_to_mqtt.py
-#   @description    :   Script to grab stock prices from Alpha Vantage and
-#                       publish them to MQTT to be consumed by another service
-##############################################################################
+"""
+    @author         :   Jeffrey Stone
+    @date           :   03/08/2019
+    @script        	:   alpha_vantage_to_mqtt.py
+    @description    :   Script to grab stock prices from Alpha Vantage and
+                        publish them to MQTT to be consumed by another service
+"""
 
 import os
 import time
 import sys
 import paho.mqtt.client as mqtt
 from alpha_vantage.timeseries import TimeSeries
-from alpha_vantage.foreignexchange import ForeignExchange
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -35,7 +34,6 @@ splunk_index = os.getenv("splunk_index")
 
 # if splunk hec key set in .env load the splunk libraries
 if http_event_collector_key:
-    import json
     from splunk_http_event_collector import http_event_collector
     if http_event_collector_ssl == "False":
         http_event_collector_ssl = False
@@ -44,6 +42,7 @@ if http_event_collector_key:
 
 
 def getCurrentStockPrice(api_key, symbols):
+    """Get Current Stock Price for a list of symbols."""
     if app_mode == 'debug':
         print("Starting Alpha Vantage Call...\n")
     timeseries = TimeSeries(key=api_key)
@@ -59,10 +58,12 @@ def getCurrentStockPrice(api_key, symbols):
 
 
 def on_publish(client, userdata, result):
+    """Pass publish."""
     pass
 
 
 def publishToMqtt(symbol, price):
+    """Publish stock info to MQTT."""
     if app_mode == 'debug':
         print("Sending {} to MQTT...\n".format(symbol))
     paho = mqtt.Client("stock_monitor")
@@ -76,6 +77,7 @@ def publishToMqtt(symbol, price):
 
 
 def splunkIt(records, symbols, total_elapsed_time, api_elapsed_time):
+    """Send Script details to Splunk."""
     if app_mode == 'debug':
         print("Time to Splunk It Yo...\n")
     logevent = http_event_collector(
@@ -104,6 +106,7 @@ def splunkIt(records, symbols, total_elapsed_time, api_elapsed_time):
 
 
 def main(interval):
+    """Start The Main Show."""
     while True:
         if app_mode == 'debug':
             print("Starting Script...\n")
