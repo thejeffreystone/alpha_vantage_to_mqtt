@@ -115,7 +115,7 @@ def main(interval):
             print("Processing {} stocks...\n".format(records))
         for item in data:
             for i in item:
-                if type(i) == type(dict()):
+                if isinstance(i, dict):
                     publishToMqtt(i['1. symbol'], i['2. price'])
         end = time.time()
         api_call_time = (api_end_time - start)
