@@ -11,6 +11,7 @@ import time
 import sys
 import paho.mqtt.client as mqtt
 from alpha_vantage.timeseries import TimeSeries
+from concurrent.futures.thread import ThreadPoolExecutor
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -47,7 +48,7 @@ def getCurrentStockPrice(api_key, symbols):
     timeseries = TimeSeries(key=api_key)
 
     try:
-        data = timeseries.get_batch_stock_quotes(symbols)
+        data = timeseries.get_get_endpoint_quotes(symbols)
     except ValueError:
         if app_mode == 'debug':
             print("API Key is not valid or symbols not known")
@@ -118,7 +119,7 @@ def main(interval):
         for item in data:
             for i in item:
                 if isinstance(i, dict):
-                    publishToMqtt(i['1. symbol'], i['2. price'])
+                    publishToMqtt(i['01. symbol'], i['05. price'])
         end = time.time()
         api_call_time = (api_end_time - start)
         total_elapsed_time = (end - start)
