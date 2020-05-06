@@ -23,23 +23,6 @@ broker = os.getenv("broker")
 port = int(os.getenv("port"))
 user = os.getenv("user")
 password = os.getenv("password")
-http_event_collector_key = os.getenv("splunk_hec_key")
-http_event_collector_host = os.getenv("splunk_server")
-http_event_collector_ssl = os.getenv("splunk_hec_ssl")
-http_event_collector_port = int(os.getenv("splunk_hec_port"))
-splunk_host = os.getenv("splunk_host")
-splunk_source = os.getenv("splunk_source")
-splunk_sourcetype = os.getenv("splunk_sourcetype")
-splunk_index = os.getenv("splunk_index")
-
-# if splunk hec key set in .env load the splunk libraries
-if http_event_collector_key:
-    from splunk_http_event_collector import http_event_collector
-    if http_event_collector_ssl == "False":
-        http_event_collector_ssl = False
-    else:
-        http_event_collector_ssl = True
-
 
 def getCurrentStockPrice(api_key, symbols):
     """Get Current Stock Price for a list of symbols."""
@@ -48,7 +31,13 @@ def getCurrentStockPrice(api_key, symbols):
     timeseries = TimeSeries(key=api_key)
 
     try:
-        data = timeseries.get_get_endpoint_quotes(symbols)
+        with ThreadPoolExecutor(max_workers=10) as executor:
+            generator = executor.map(lambda stock:timeseries.get_quote_endpoint(symbol=stock), symbols)
+        for data in generator:
+            # Lets publish this to MQTT....
+            publishToMqtt(data[0]['01. symbol'], data[0]['05. price'])
+            if app_mode == 'debug':
+                print("{} - {}".format(data[0]['01. symbol'],data[0]['05. price']))
     except ValueError:
         if app_mode == 'debug':
             print("API Key is not valid or symbols not known")
@@ -56,11 +45,9 @@ def getCurrentStockPrice(api_key, symbols):
         print("Alpha Vantage Call Complete...\n")
     return data
 
-
 def on_publish(client, userdata, result):
     """Pass publish."""
     pass
-
 
 def publishToMqtt(symbol, price):
     """Publish stock info to MQTT."""
@@ -75,57 +62,22 @@ def publishToMqtt(symbol, price):
         print("Published {} with price {} to MQTT...\n".format(symbol, price))
     paho.disconnect()
 
-
-def splunkIt(records, symbols, total_elapsed_time, api_elapsed_time):
-    """Send Script details to Splunk."""
-    if app_mode == 'debug':
-        print("Time to Splunk It Yo...\n")
-    logevent = http_event_collector(
-        http_event_collector_key,
-        http_event_collector_host,
-        http_event_port=http_event_collector_port,
-        http_event_server_ssl=http_event_collector_ssl)
-    logevent.popNullFields = True
-
-    payload = {}
-    payload.update({"index": splunk_index})
-    payload.update({"sourcetype": splunk_sourcetype})
-    payload.update({"source": splunk_source})
-    payload.update({"host": splunk_host})
-    event = {}
-    event.update({"action": "success"})
-    event.update({"records": records})
-    event.update({"total_elapsed_time": total_elapsed_time})
-    event.update({"api_elapsed_time": api_elapsed_time})
-    event.update({"stocks": "{}".format(symbols)})
-    payload.update({"event": event})
-    logevent.sendEvent(payload)
-    logevent.flushBatch()
-    if app_mode == 'debug':
-        print("It has been Splunked...\n")
-
-
 def main(interval):
     """Start The Main Show."""
     while True:
         if app_mode == 'debug':
             print("Starting Script...\n")
         start = time.time()
-        data = getCurrentStockPrice(api_key, symbols)
+        result = getCurrentStockPrice(api_key, symbols)
         api_end_time = time.time()
         records = len(symbols)
-        if app_mode == 'debug':
-            print("Processing {} stocks...\n".format(records))
-        for item in data:
-            for i in item:
-                if isinstance(i, dict):
-                    publishToMqtt(i['01. symbol'], i['05. price'])
+        if app_mode == 'debug' and result:
+            print("Processed {} stocks...\n".format(records))
+
         end = time.time()
         api_call_time = (api_end_time - start)
         total_elapsed_time = (end - start)
-        if http_event_collector_key:
-            splunkIt(records, symbols, total_elapsed_time, api_call_time)
-        if app_mode == 'debug':
+        if app_mode == 'debug' and result:
             print("Script Completed...")
         if interval > 0:
             print("Time to sleep for {} seconds\n".format(interval))
